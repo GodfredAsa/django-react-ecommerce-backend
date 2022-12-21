@@ -51,9 +51,7 @@ REST_FRAMEWORK = {
     )
 }
 
-# CUSTOMIZING TOKEN 
-# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
-# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+
 from datetime import timedelta
 # customised access token to 7 days
 SIMPLE_JWT = {

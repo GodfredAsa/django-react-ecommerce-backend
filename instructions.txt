@@ -1,1 +1,11 @@
 drawsql.app used to draw ERD 
+# CUSTOMIZING TOKEN 
+
+guide on token installation and usage 
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+
+customise token expiration resource 
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+
+customizing token claims to return user data or more information about the user than the user id and expiration date 
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/customizing_token_claims.html
