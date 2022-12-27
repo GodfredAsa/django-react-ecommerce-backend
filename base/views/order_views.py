@@ -31,7 +31,7 @@ def addOrderItems(request):
         # (2) create shipping address
         shippingAddress = ShippingAddress.objects.create(
             order = order,
-            address = data['shippingAddress']['address'],
+            address = data["shippingAddress"]["address"],
             city = data['shippingAddress']['city'],
             postalCode = data['shippingAddress']['postalCode'],
             country = data['shippingAddress']['country'],    
@@ -44,15 +44,15 @@ def addOrderItems(request):
                 product = product,
                 order = order,
                 name = product.name,
-                qty = i['qty'],
+                qty = int(i['qty']),
                 price = i['price'],
                 image = product.image.url
             )
         # (4) update stock
         product.countInStock -= item.qty
         product.save()
-    serializer = OrderSerializer(order, many = False)
-        
-    return Response(serializer.data)
+        serializer = OrderSerializer(order, many = False)
+         
+        return Response(serializer.data)
     
 
