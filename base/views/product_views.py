@@ -7,7 +7,7 @@ from base.serializers import ProductSerializer
 
 @api_view(['GET'])
 def getProducts(request):
-    products = Product.objects.all()
+    products = [ product for product in Product.objects.all() if product.countInStock > 0]
     serializer = ProductSerializer(products, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
