@@ -67,4 +67,9 @@ def getUsers(request):
     serializer = UserSerializer(users, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-        
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteUser(request, pk):
+    user = User.objects.get(id=pk)
+    user.delete()
+    return Response({'details': 'User successfully deleted'})

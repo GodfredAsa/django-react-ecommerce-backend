@@ -82,7 +82,4 @@ class OrderSerializer(serializers.ModelSerializer):
        serializer = UserSerializer(user, many=False)
        return serializer.data
        
-       
-
-
-
+      
