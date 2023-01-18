@@ -67,6 +67,30 @@ def getUsers(request):
     serializer = UserSerializer(users, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getUserById(request, pk):
+    user = User.objects.get(id=pk)
+    if user:
+        serializer = UserSerializer(user, many = False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'details': 'User Does Not Exists'})
+    
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateUser(request, pk):
+    user = User.objects.get(id=pk)
+    
+    # updating user information
+    data = request.data
+    user.first_name = data['name']
+    user.username = data['email']
+    user.email = data['email']
+    user.is_staff = data['isAdmin']
+    user.save()
+    serializer = UserSerializer(user, many = False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 def deleteUser(request, pk):
