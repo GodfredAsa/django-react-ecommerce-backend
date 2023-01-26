@@ -1,4 +1,3 @@
-
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -28,7 +27,7 @@ def createProduct(request):
         name = "Sample Name",
         price = 0,
         brand = "Sample Brand",
-        countInStock = 0,
+        countInStock = 1,
         category = "Sample Category",
         description = "description"  
     )
@@ -53,5 +52,7 @@ def updateProduct(request, pk):
 @permission_classes([IsAdminUser])
 def deleteProduct(request, pk):
     product = Product.objects.get(_id=pk)
+    if not product:
+        return Response({"details": f"Product With ID {pk} Not Found"}, status=status.HTTP_404_NOT_FOUND)
     product.delete()
-    return Response({'details': 'Product successfully deleted'})
+    return Response({'details': 'Product successfully deleted'}, status=status.HTTP_200_OK)
