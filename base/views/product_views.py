@@ -56,3 +56,12 @@ def deleteProduct(request, pk):
         return Response({"details": f"Product With ID {pk} Not Found"}, status=status.HTTP_404_NOT_FOUND)
     product.delete()
     return Response({'details': 'Product successfully deleted'}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def uploadProductImage(request):
+    data = request.data 
+    product_id = data['product_id']
+    product = Product.objects.get(_id=product_id)
+    product.image = request.FILES.get('image')
+    product.save()
+    Response({'details':'Image Uploaded Successfully'}, status=status.HTTP_200_OK)
