@@ -8,7 +8,10 @@ from base.serializers import ProductSerializer
 
 @api_view(['GET'])
 def getProducts(request):
-    products = [ product for product in Product.objects.all() if product.countInStock > 0]
+    query = request.query_params.get('keyword')
+    if query == None:
+        query = ''
+    products = Product.objects.filter(name__icontains = query)
     serializer = ProductSerializer(products, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -78,12 +81,12 @@ def createProductReview(request, pk):
     # 1. review already exists
     alreadyExists = product.review_set.filter(user = user).exists()
     if alreadyExists:
-        content = {'details': 'Product already Reviewed'}
+        content = {'detail': 'Product already Reviewed'}
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
     
     # 2 No rating or rating is 0
     elif data['rating'] == 0:
-        content = {'details': 'Please Select a Rating '}
+        content = {'detail': 'Please Select a Rating '}
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
         
     # 3 Create review 
