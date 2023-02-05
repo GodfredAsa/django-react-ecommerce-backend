@@ -5,6 +5,7 @@ urlpatterns = [
     path('', product_views.getProducts, name='products'),
     path('create', product_views.createProduct, name='create-product'),
     path('upload', product_views.uploadProductImage, name='image-upload'),
+    path('top', product_views.getTopProducts, name='top-products'),
     
     path('<str:pk>', product_views.getProduct, name='product'),
     path('<str:pk>/review', product_views.createProductReview, name='create-review'),
