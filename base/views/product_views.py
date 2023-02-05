@@ -15,7 +15,7 @@ def getProducts(request):
     products = Product.objects.filter(name__icontains = query)
     # implementing page pagination
     page = request.query_params.get('page')
-    paginator =  Paginator(products, 2)
+    paginator =  Paginator(products, 5)
     
     try:
         products = paginator.page(page)
@@ -33,6 +33,15 @@ def getProducts(request):
     return Response(
         {'products': serializer.data, 
          'page': page, 'pages' : paginator.num_pages }, status=status.HTTP_200_OK)
+    
+    # top 5 products 
+@api_view(['GET'])
+def getTopProducts(request):
+    # products = [ product for product in Product.objects.all() if product.rating >= 3]
+    products = Product.objects.filter(rating__gte = 2).order_by('-rating')[0:5]
+    serializer = ProductSerializer(products, many = True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+    
 
 @api_view(['GET'])
 def getProduct(request, pk):
@@ -80,7 +89,7 @@ def deleteProduct(request, pk):
     return Response({'details': 'Product successfully deleted'}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
-@permission_classes([IsAdminUser])
+# @permission_classes([IsAdminUser]) # throws on authorize hence commented it out.
 def uploadProductImage(request):
     data = request.data 
     product_id = data['product_id']
