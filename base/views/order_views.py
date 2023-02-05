@@ -105,4 +105,14 @@ def updateOrderToDelivered(request, pk):
     return Response("Order was delivered")
 
 
+# @api_view(['PUT'])
+# @permission_classes([IsAdminUser]) 
+# def updateOrderToPaid(request, pk):
+#     order  = Order.objects.get(_id=pk)
+#     order.isPaid= True
+#     order.paidAt= datetime.now()
+#     order.save()
+#     return Response("Order was Paid")
+
+
 
